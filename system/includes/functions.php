@@ -10,7 +10,7 @@
  * Lazy Loader.
  * @param string $class_name
  */
-function __autoload($class_name) {
+function autoload($class_name) {
     // Splits class name by '_' //
     $loader = array();
     @list($loader['file_name'], $loader['suffix']) = explode('_', $class_name, 2);
@@ -31,9 +31,7 @@ function __autoload($class_name) {
     if (file_exists($file_path)) {
         include_once $file_path;
     } else {
-        see_var(realpath($file_path), 'realpath');
-        see_var($file_path, 'Requested Path');
-        die('The requested path could not be loaded.');
+        die('The requested file could not be found.');
     }
 }
 
@@ -130,4 +128,5 @@ function log_message($log = '', $action = '', $message = '') {
     }
 }
 
+spl_autoload_register('autoload');
 ?>
